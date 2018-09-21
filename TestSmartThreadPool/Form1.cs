@@ -38,7 +38,8 @@ namespace TestSmartThreadPool
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label lblWorkItemsGenerated;
 		private bool running;
-		private long workItemsGenerated;
+        private long workItemsGenerated;
+      
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label lblWorkItemsCompleted;
 		private UsageControl.UsageControl usageThreadsInPool;
@@ -665,7 +666,7 @@ namespace TestSmartThreadPool
 
 				if (!PerformanceCounterCategory.Exists("SmartThreadPool"))
 				{
-					MessageBox.Show("Failed to create Performance Counters category.\r\nIf you run on Vista, Windows 7, or later, you need to run for the first time as Administrator to create the performance counters category.\r\n\r\nUsing internal performance counters instead.", "Test Smart Thread Pool", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Failed to create Performance Counters category.\r\nIf you run on Vista or Windows 7, you need to run for the first time as Administrator to create the performance counters category.\r\n\r\nUsing internal performance counters instead.", "Test Smart Thread Pool", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return false;
 				}
 

@@ -52,6 +52,7 @@ namespace Amib.Threading
 
 	    /// <summary>
 	    /// Get/Set if to use the caller's security context
+        /// 是否使用上下文
 	    /// </summary>
 	    public virtual bool UseCallerCallContext
 	    {
@@ -66,6 +67,7 @@ namespace Amib.Threading
 
 	    /// <summary>
 	    /// Get/Set if to use the caller's HTTP context
+        /// 是不是使用调用者http上下文
 	    /// </summary>
 	    public virtual bool UseCallerHttpContext
 	    {

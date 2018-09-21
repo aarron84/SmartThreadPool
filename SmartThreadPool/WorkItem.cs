@@ -2,8 +2,6 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 
-using Amib.Threading;
-
 namespace Amib.Threading.Internal
 {
     /// <summary>
@@ -24,6 +22,12 @@ namespace Amib.Threading.Internal
             Canceled = 3,    // Stays Canceled
         }
 
+        /// <summary>
+        /// 检查当前工作状态是否可以下一个状态
+        /// </summary>
+        /// <param name="currentState"></param>
+        /// <param name="nextState"></param>
+        /// <returns></returns>
         private static bool IsValidStatesTransition(WorkItemState currentState, WorkItemState nextState)
         {
             bool valid = false;
@@ -264,6 +268,7 @@ namespace Amib.Threading.Internal
 
         /// <summary>
         /// Change the state of the work item to in progress if it wasn't canceled.
+        ///如果任务没有取消，就把任务动行状态改为处理中
         /// </summary>
         /// <returns>
         /// Return true on success or false in case the work item was canceled.

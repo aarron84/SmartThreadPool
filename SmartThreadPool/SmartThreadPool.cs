@@ -93,10 +93,6 @@
 // 24 August 2012 - Changes:
 //      - Enabled cancel abort after cancel. See: http://smartthreadpool.codeplex.com/discussions/345937 by alecswan
 //      - Added option to set MaxStackSize of threads 
-//
-// 16 September 2016 - Changes:
-//      - Separated the STP project to .NET 2.0, .NET 4.0, and .NET 4.5
-//      - Added option to set MaxQueueLength (Thanks to Rob Hruska)
 
 #endregion
 
@@ -190,14 +186,9 @@ namespace Amib.Threading
         public const string DefaultThreadPoolName = "SmartThreadPool";
 
         /// <summary>
-        /// The default Max Stack Size. (null)
+        /// The default Max Stack Size. (SmartThreadPool)
         /// </summary>
         public static readonly int? DefaultMaxStackSize = null;
-
-        /// <summary>
-        /// The default Max Queue Length (null).
-        /// </summary>
-	    public static readonly int? DefaultMaxQueueLength = null;
 
         /// <summary>
         /// The default fill state with params. (false)
@@ -254,7 +245,7 @@ namespace Amib.Threading
 		/// Total number of work items that are stored in the work items queue 
 		/// plus the work items that the threads in the pool are working on.
 		/// </summary>
-		private volatile int _currentWorkItemsCount;
+		private int _currentWorkItemsCount;
 
 		/// <summary>
 		/// Signaled when the thread pool is idle, i.e. no thread is busy
@@ -416,19 +407,6 @@ namespace Amib.Threading
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="startSuspended">Set it to True to start thread pool in suspended mode; Explicit call to Start() will be needed to start the Thread pool.</param>
-		public SmartThreadPool(bool startSuspended)
-		{
-			_stpStartInfo = new STPStartInfo
-            		{
-                		StartSuspended = startSuspended,
-            		};
-			Initialize();
-		}
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
 		/// <param name="idleTimeout">Idle timeout in milliseconds</param>
 		/// <param name="maxWorkerThreads">Upper limit of threads in the pool</param>
 		public SmartThreadPool(
@@ -489,7 +467,7 @@ namespace Amib.Threading
                 throw new NotSupportedException("Performance counters are not implemented for Compact Framework/Silverlight/Mono, instead use StpStartInfo.EnableLocalPerformanceCounters");
             }
 #else
-            if (null != _stpStartInfo.PerformanceCounterInstanceName)
+            if (null != _stpStartInfo.PerformanceCounterInstanceName)  //性能计数器名称
             {
                 try
                 {
@@ -502,7 +480,7 @@ namespace Amib.Threading
                 }
             }
 #endif
-
+            //是否启动性能计数器
             if (_stpStartInfo.EnableLocalPerformanceCounters)
             {
                 _localPCs = new LocalSTPInstancePerformanceCounters();
@@ -526,6 +504,9 @@ namespace Amib.Threading
             }
 		}
 
+        /// <summary>
+        /// 检查参数设置是否正确（最小线程数，最大线程数）
+        /// </summary>
 		private void ValidateSTPStartInfo()
 		{
             if (_stpStartInfo.MinWorkerThreads < 0)
@@ -546,13 +527,6 @@ namespace Amib.Threading
 					"MinWorkerThreads, maxWorkerThreads", 
 					"MaxWorkerThreads must be greater or equal to MinWorkerThreads");
 			}
-
-		    if (_stpStartInfo.MaxQueueLength < 0)
-		    {
-                throw new ArgumentOutOfRangeException(
-                    "MaxQueueLength",
-                    "MaxQueueLength must be >= 0 or null (for unbounded)");
-		    }
 		}
 
 		private static void ValidateCallback(Delegate callback)
@@ -779,7 +753,7 @@ namespace Amib.Threading
 					// It's good for debugging.
                     CurrentThreadEntry.IAmAlive();
 
-					// On timeout or shut down.
+					// On timeout or shut down. 如果线程空闲并且当前线程数大于最小线程数则关闭当前线程
 					if (null == workItem)
 					{
 						// Double lock for quit.
@@ -1359,26 +1333,7 @@ namespace Amib.Threading
             }
         }
 
-	    private void ValidateQueueIsWithinLimits()
-	    {
-            // Keep a local copy; if a client changes the length while this is executing,
-            // we'll want to use the same value throughout.
-	        var maxQueueLength = _stpStartInfo.MaxQueueLength;
-
-	        if (maxQueueLength == null)
-	        {
-	            return;
-	        }
-
-            // Instead of just looking at the current queue length here, account for the
-            // fact that the pool is going to scale up its threads if it's not yet at its
-            // maximum and there are queued items. This means that the queue length limit
-            // may be briefly exceeded while the pool is scaling up.
-            if (_currentWorkItemsCount >= maxQueueLength + MaxThreads)
-	        {
-	            throw new QueueRejectedException("Queue is at its maximum (" + maxQueueLength + ")");
-	        }
-	    }
+        
 
 		#endregion
 
@@ -1430,21 +1385,6 @@ namespace Amib.Threading
                 StartOptimalNumberOfThreads();
             } 
 		}
-
-	    public int? MaxQueueLength
-	    {
-	        get
-	        {
-	            ValidateNotDisposed();
-	            return _stpStartInfo.MaxQueueLength;
-	        }
-
-	        set
-	        {
-	            _stpStartInfo.MaxQueueLength = value;
-	        }
-	    }
-
 		/// <summary>
 		/// Get the number of threads in the thread pool.
 		/// Should be between the lower and the upper limits.
@@ -1458,18 +1398,17 @@ namespace Amib.Threading
 			} 
 		}
 
-        /// <summary>
-        /// Get the number of work items that haven't finished execution (i.e.
-        /// items being worked on by threads + items in the queue).
-        /// </summary>
-	    public int CurrentWorkItemsCount
-	    {
-	        get
-	        {
-	            ValidateNotDisposed();
-	            return _currentWorkItemsCount;
-	        }
-	    }
+		/// <summary>
+		/// Get the number of busy (not idle) threads in the thread pool.
+		/// </summary>
+		public int InUseThreads 
+		{ 
+			get 
+			{ 
+				ValidateNotDisposed();
+				return _inUseWorkerThreads; 
+			} 
+		}
 
         /// <summary>
         /// Returns true if the current running work item has been cancelled.
@@ -1571,18 +1510,6 @@ namespace Amib.Threading
 	        get { return MaxThreads; }
 	        set { MaxThreads = value; }
 	    }
-
-        /// <summary>
-        /// Get the number of busy (not idle) threads in the thread pool.
-        /// </summary>
-        public override int InUseThreads
-        {
-            get
-            {
-                ValidateNotDisposed();
-                return _inUseWorkerThreads;
-            }
-        }
 
 	    /// <summary>
 	    /// Get the number of work items in the queue.
@@ -1696,10 +1623,7 @@ namespace Amib.Threading
 
 	    internal override void PreQueueWorkItem()
         {
-            ValidateNotDisposed();
-
-            // This gives no preference to items of higher priority.
-	        ValidateQueueIsWithinLimits();
+            ValidateNotDisposed();   
         }
 
         #endregion

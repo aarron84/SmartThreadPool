@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="8719f596-531f-4fec-ae49-222806cb1702" name="UMLClassDiagram1" linkedPackageId="ce8df6cf-505b-4c25-953f-00da3f444482" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d9f7976f-755c-4e16-9af1-88d771a497b1" name=" SmartThreadPool " isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2853f376-78a7-4fff-b072-9940213e11af" />
+        <generalsInternal>
+          <generalization Id="8d4163cb-b223-4990-b757-dc532fad09d0" isSubstitutable="false">
+            <classMoniker Id="418cd578-febc-458e-a371-03cc095a9ba8" LastKnownName="WorkItemsGroupBase" />
+            <elementDefinition Id="35bc04ba-b33e-4cca-99b3-6db9e9c375bf" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association Id="da91d45a-418b-448e-b846-4229798bf669" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="7f0d9a0e-0b23-4be2-9a6b-19f38e4768da" LastKnownName="WorkItemsQueue" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f9f455d5-91b5-48bd-b12c-750cda368ac2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="5d3c9a88-f053-4192-9562-547e4988f164" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ac1bcc5a-faaf-4c78-b6cc-d33ec92205f4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fda44e9e-fa23-41aa-9ec2-45a76ed92a8e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="862c3f06-5ff4-4d6b-aa5a-cc0dbc806044" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="418cd578-febc-458e-a371-03cc095a9ba8" name="WorkItemsGroupBase" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a9e93d4a-6b7b-48aa-aefb-5e6221fb6745" />
+        <generalsInternal>
+          <generalization Id="d10e259d-5922-452f-828e-d17d1e0e7ebb" isSubstitutable="false">
+            <classMoniker Id="e40fa5f2-a9a9-40c5-ad1c-6f8c1fedb84b" LastKnownName="IWorkItemsGroup" />
+            <elementDefinition Id="5ed5e836-3fe6-4cac-9d5d-3dba3ad3cb2b" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="e40fa5f2-a9a9-40c5-ad1c-6f8c1fedb84b" name="IWorkItemsGroup" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f0426aeb-8d3c-4b0d-97f4-23dc4b88ebfc" />
+        <targetEnds>
+          <association Id="ae9e1fe3-2f43-40cc-9035-d44014984457" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="b7392f7a-fb0d-4632-9a35-2ab9afcb07b0" LastKnownName="WIGStartInfo" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6efd0e8a-82de-469e-8675-8e6c9334c271" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="27ed3528-353c-48ce-aeb5-380ab382259a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3f692df4-28e0-482e-9750-d710f9c0e6e3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3b29190f-cb8f-4bfc-af14-169b9cd0d5e2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7392c1be-5095-4e82-821a-1c09117be34e" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="68ad0639-6248-4a46-aba3-bc16449eb041" name="WorkItemsGroup" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3f6836a5-38fd-46af-aaf7-ce86a1a8fa65" />
+        <generalsInternal>
+          <generalization Id="5753aef5-2ce0-4a5f-9090-9d77bb55e314" isSubstitutable="false">
+            <classMoniker Id="418cd578-febc-458e-a371-03cc095a9ba8" LastKnownName="WorkItemsGroupBase" />
+            <elementDefinition Id="9f795165-b8ed-4511-8458-e53bb5371fe2" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b7392f7a-fb0d-4632-9a35-2ab9afcb07b0" name="WIGStartInfo" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f1999563-0790-4975-9ebd-93adaa7f298a" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7f0d9a0e-0b23-4be2-9a6b-19f38e4768da" name="WorkItemsQueue" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="04d198e0-09ed-4211-8431-49dfac86b784" />
+        <targetEnds>
+          <association Id="4b8499bd-f0ec-4ca2-aedc-137989921d4e" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="9f8dd31f-ee80-4d78-87b5-c93254655910" LastKnownName="PriorityQueue" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="be015fa6-2b90-4022-b776-4d3f0936fa99" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d5f72071-22b9-4f94-8980-c3185cec2735" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ed6716dd-ae72-4723-86af-d1f39d614500" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="85f475af-176c-4b52-923a-140669fab012" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9b739eb4-1430-4ad8-8f8c-696ad5bb641f" />
+          </association>
+          <association Id="ada5a55e-d821-4193-9fbf-29cc1607f119" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="42618044-c99a-4444-81fe-aff70bbde0a6" LastKnownName="WorkItem" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2ffb0834-fe97-4b3b-95b2-b14a7396ab47" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="3724446d-1381-43e4-b924-cef9495aed20" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c929ebbf-a729-4746-bfb1-deaae271eb5e" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5710f5b7-0198-4f5c-a532-16c6850243f5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7b6df85c-8fc4-4a93-b55b-0cadcd101db5" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="42618044-c99a-4444-81fe-aff70bbde0a6" name="WorkItem" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5ed7c986-28c0-4364-8992-ee42d9943678" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="9f8dd31f-ee80-4d78-87b5-c93254655910" name="PriorityQueue" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6db180a3-5ff1-4177-ad5d-5f1310ca6b13" />
+        <targetEnds>
+          <association Id="ba1be741-e315-4aff-a31e-8926c41c8e10" isDerived="false" sourceEndRoleName="" targetEndRoleName="" isLeaf="false" isAbstract="false">
+            <classMoniker Id="42618044-c99a-4444-81fe-aff70bbde0a6" LastKnownName="WorkItem" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ef52971b-dd08-4264-807c-7895f4820d70" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="5d7ae29e-fcee-4449-8c64-3f0ca11dde44" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c8b66a10-7028-4113-b122-1273268d66e5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="7c298a9a-b2c2-4877-b44e-f9ab503a8c29" name="Lower" value="n">
+                      <elementDefinition Id="03a1b549-f99f-4efe-88b7-f46aeaf1ce20" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="600986b4-17eb-458d-b711-1c818aeb8b4c" name="Upper" value="n">
+                      <elementDefinition Id="f971b1ab-8136-4b7e-9631-81fe704da0e8" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="8641b1cf-61ad-4aef-92de-d8021fd82496" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="dd52928c-80eb-40f8-aba1-e443c47e4acf" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="ce8df6cf-505b-4c25-953f-00da3f444482" name="SmartThreadPoolUml">
+    <elementDefinition Id="3d31aac5-f1b4-4e1d-906d-dff8f5f0796d" />
+    <profileInstances>
+      <packageHasProfileInstances Id="62dfe1c0-b40f-49a7-a178-f5165ca6ad14">
+        <profileInstance Id="6e79ae8e-6b83-42c1-91b2-da2e261c03c5" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="9e17eccb-4355-4301-bacc-136c2f0a0fbd">
+        <profileInstance Id="d9710030-016c-43a6-94e6-9f11145a6dae" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

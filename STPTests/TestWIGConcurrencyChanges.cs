@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
 
@@ -14,6 +13,9 @@ namespace WorkItemsGroupTests
 	[Category("TestWIGConcurrencyChanges")]
 	public class TestWIGConcurrencyChanges
 	{
+	    /// <summary>
+        /// Example of waiting for idle
+        /// </summary>
         [Test]
         public void TestWIGConcurrencyChange1WIG()
         {
@@ -55,6 +57,9 @@ namespace WorkItemsGroupTests
             smartThreadPool.Shutdown();
         }
 
+        /// <summary>
+        /// Example of waiting for idle
+        /// </summary>
         [Test]
         public void TestWIGConcurrencyChange2WIGs()
         {
@@ -136,57 +141,67 @@ namespace WorkItemsGroupTests
             return 1;
         }
 
-        [Test]
-        public void TestWIGConcurrencyChange()
-        {
-            SmartThreadPool smartThreadPool = new SmartThreadPool(10 * 1000, 25, 0);
 
-            IWorkItemsGroup wig = smartThreadPool.CreateWorkItemsGroup(smartThreadPool.MaxThreads);
+
+
+/*
+        /// <summary>
+        /// Example of waiting for idle
+        /// </summary>
+        [Test]
+        public void WaitForIdle() 
+        { 
+            SmartThreadPool smartThreadPool = new SmartThreadPool(10*1000, 25, 0);
+
             bool success = false;
 
-            for (int i = 0; i < 100; ++i)
+            for(int i = 0; i < 100; ++i)
             {
-                wig.QueueWorkItem(new WorkItemCallback(this.DoSomeLongWork), null);
+                smartThreadPool.QueueWorkItem(
+                    new WorkItemCallback(this.DoSomeWork), 
+                    null);
             }
 
-            wig.Concurrency = 1;
-            success = WaitForWIGThreadsInUse(wig, 1, 1 * 1000);
-            Assert.IsTrue(success);
-
-            wig.Concurrency = 5;
-            success = WaitForWIGThreadsInUse(wig, 5, 2 * 1000);
-            Assert.IsTrue(success);
-
-            wig.Concurrency = 25;
-            success = WaitForWIGThreadsInUse(wig, 25, 4 * 1000);
-            Assert.IsTrue(success);
-
-            wig.Concurrency = 10;
-            success = WaitForWIGThreadsInUse(wig, 10, 10 * 1000);
-            Assert.IsTrue(success);
+            success = !smartThreadPool.WaitForIdle(3500);
+            success = success && smartThreadPool.WaitForIdle(1000);
 
             smartThreadPool.Shutdown();
-        }
+
+            Assert.IsTrue(success);
+        } 
+
+		[Test]
+		public void WaitForIdleOnWrongThread() 
+		{ 
+			SmartThreadPool smartThreadPool = new SmartThreadPool(10*1000, 25, 0);
+
+			IWorkItemResult wir = smartThreadPool.QueueWorkItem(
+				new WorkItemCallback(this.DoWaitForIdle), 
+				smartThreadPool);
+
+			Exception e;
+			wir.GetResult(out e);
+
+			smartThreadPool.Shutdown();
+
+			Assert.IsTrue(e is NotSupportedException);
+		} 
 
 
-        private bool WaitForWIGThreadsInUse(IWorkItemsGroup wig, int maxThreadsCount, int timeout)
-        {
-            DateTime end = DateTime.Now + new TimeSpan(0, 0, 0, 0, timeout);
-
-            bool success = false;
-            while (DateTime.Now <= end && !success)
-            {
-                success = (wig.InUseThreads == maxThreadsCount);
-                Thread.Sleep(10);
-            }
-
-            return success;
-        }
-
-        private object DoSomeLongWork(object state)
-        {
-            Thread.Sleep(250);
+        private int x = 0;
+        private object DoSomeWork(object state)
+        { 
+            Debug.WriteLine(Interlocked.Increment(ref x));
+            Thread.Sleep(1000);
             return 1;
         }
-    }
+
+		private object DoWaitForIdle(object state)
+		{ 
+			SmartThreadPool smartThreadPool = state as SmartThreadPool;
+			smartThreadPool.WaitForIdle();
+			return null;
+		}
+ */ 
+	}
 }

@@ -49,6 +49,7 @@ namespace Amib.Threading
     /// Defines the availeable priorities of a work item.
     /// The higher the priority a work item has, the sooner
     /// it will be executed.
+    /// 任务优先级
     /// </summary>
 	public enum WorkItemPriority
 	{
@@ -76,22 +77,20 @@ namespace Amib.Threading
 
         /// <summary>
         /// Get/Set the maximum number of workitem that execute cocurrency on the thread pool
+        /// 最大并发数量
         /// </summary>
         int Concurrency { get; set; }
 
         /// <summary>
         /// Get the number of work items waiting in the queue.
+        /// 等待执行任务数量
         /// </summary>
         int WaitingCallbacks { get; }
 
         /// <summary>
-        /// Get the number of currently executing work items
-        /// </summary>
-        int InUseThreads { get; }
-
-        /// <summary>
         /// Get an array with all the state objects of the currently running items.
         /// The array represents a snap shot and impact performance.
+        /// 获取所有执行中任务的上下文状态
         /// </summary>
         object[] GetStates();
 
@@ -270,31 +269,61 @@ namespace Amib.Threading
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
-        IWorkItemResult QueueWorkItem(Action action, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult QueueWorkItem(Action action);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
-        IWorkItemResult QueueWorkItem<T>(Action<T> action, T arg, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult QueueWorkItem (Action action, WorkItemPriority priority);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
-        IWorkItemResult QueueWorkItem<T1, T2>(Action<T1, T2> action, T1 arg1, T2 arg2, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult QueueWorkItem<T> (Action<T> action, T arg, WorkItemPriority priority);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
-        IWorkItemResult QueueWorkItem<T1, T2, T3>(Action<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult QueueWorkItem<T> (Action<T> action, T arg);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
-        IWorkItemResult QueueWorkItem<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action, T1 arg1, T2 arg2, T3 arg3, T4 arg4, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult QueueWorkItem<T1, T2>(Action<T1, T2> action, T1 arg1, T2 arg2);
+
+        /// <summary>
+        /// Queue a work item.
+        /// </summary>
+        /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        IWorkItemResult QueueWorkItem<T1, T2> (Action<T1, T2> action, T1 arg1, T2 arg2, WorkItemPriority priority);
+
+        /// <summary>
+        /// Queue a work item.
+        /// </summary>
+        /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        IWorkItemResult QueueWorkItem<T1, T2, T3>(Action<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3);
+
+        /// <summary>
+        /// Queue a work item.
+        /// </summary>
+        /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        IWorkItemResult QueueWorkItem<T1, T2, T3> (Action<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3, WorkItemPriority priority);
+
+        /// <summary>
+        /// Queue a work item.
+        /// </summary>
+        /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        IWorkItemResult QueueWorkItem<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action, T1 arg1, T2 arg2, T3 arg3, T4 arg4);
+
+        /// <summary>
+        /// Queue a work item.
+        /// </summary>
+        /// <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        IWorkItemResult QueueWorkItem<T1, T2, T3, T4> (Action<T1, T2, T3, T4> action, T1 arg1, T2 arg2, T3 arg3, T4 arg4, WorkItemPriority priority);
 
         #endregion
 
@@ -305,35 +334,35 @@ namespace Amib.Threading
         /// </summary>
         /// <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
         /// its GetResult() returns a TResult object</returns>
-        IWorkItemResult<TResult> QueueWorkItem<TResult>(Func<TResult> func, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult<TResult> QueueWorkItem<TResult>(Func<TResult> func);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
         /// its GetResult() returns a TResult object</returns>
-        IWorkItemResult<TResult> QueueWorkItem<T, TResult>(Func<T, TResult> func, T arg, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult<TResult> QueueWorkItem<T, TResult>(Func<T, TResult> func, T arg);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
         /// its GetResult() returns a TResult object</returns>
-        IWorkItemResult<TResult> QueueWorkItem<T1, T2, TResult>(Func<T1, T2, TResult> func, T1 arg1, T2 arg2, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult<TResult> QueueWorkItem<T1, T2, TResult>(Func<T1, T2, TResult> func, T1 arg1, T2 arg2);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
         /// its GetResult() returns a TResult object</returns>
-        IWorkItemResult<TResult> QueueWorkItem<T1, T2, T3, TResult>(Func<T1, T2, T3, TResult> func, T1 arg1, T2 arg2, T3 arg3, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult<TResult> QueueWorkItem<T1, T2, T3, TResult>(Func<T1, T2, T3, TResult> func, T1 arg1, T2 arg2, T3 arg3);
 
         /// <summary>
         /// Queue a work item.
         /// </summary>
         /// <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
         /// its GetResult() returns a TResult object</returns>
-        IWorkItemResult<TResult> QueueWorkItem<T1, T2, T3, T4, TResult>(Func<T1, T2, T3, T4, TResult> func, T1 arg1, T2 arg2, T3 arg3, T4 arg4, WorkItemPriority priority = SmartThreadPool.DefaultWorkItemPriority);
+        IWorkItemResult<TResult> QueueWorkItem<T1, T2, T3, T4, TResult>(Func<T1, T2, T3, T4, TResult> func, T1 arg1, T2 arg2, T3 arg3, T4 arg4);
 
         #endregion
     }
@@ -347,16 +376,19 @@ namespace Amib.Threading
 	{
         /// <summary>
         /// Never call to the PostExecute call back
+        /// 不执行
         /// </summary>
 		Never                    = 0x00,
 
         /// <summary>
         /// Call to the PostExecute only when the work item is cancelled
+        /// 当任务取消时执行
         /// </summary>
 		WhenWorkItemCanceled     = 0x01,
 
         /// <summary>
         /// Call to the PostExecute only when the work item is not cancelled
+        /// 当任务没有取消时才执行
         /// </summary>
 		WhenWorkItemNotCanceled  = 0x02,
 

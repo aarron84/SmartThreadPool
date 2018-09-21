@@ -25,22 +25,19 @@ namespace SmartThreadPoolTests
 		}
 
 		[Test]
+		[ExpectedException(typeof(NotSupportedException))]
 		public void ChainedDelegatesCallback()
 		{
-		    Assert.Throws<NotSupportedException>(() =>
-		    {
+			SmartThreadPool stp = new SmartThreadPool();
 
-		        SmartThreadPool stp = new SmartThreadPool();
+			WorkItemCallback workItemCallback = new WorkItemCallback(DoWork);
+			workItemCallback += new WorkItemCallback(DoWork);
 
-		        WorkItemCallback workItemCallback = new WorkItemCallback(DoWork);
-		        workItemCallback += new WorkItemCallback(DoWork);
+			stp.QueueWorkItem(workItemCallback);
 
-		        stp.QueueWorkItem(workItemCallback);
+			stp.WaitForIdle();
 
-		        stp.WaitForIdle();
-
-		        stp.Shutdown();
-		    });
+			stp.Shutdown();
 		}
 
 		[Test]
@@ -59,25 +56,22 @@ namespace SmartThreadPoolTests
 		}
 
 		[Test]
+		[ExpectedException(typeof(NotSupportedException))]
 		public void ChainedDelegatesPostExecute()
 		{
-		    Assert.Throws<NotSupportedException>(() =>
-		    {
+			SmartThreadPool stp = new SmartThreadPool();
 
-		        SmartThreadPool stp = new SmartThreadPool();
+            PostExecuteWorkItemCallback postExecuteWorkItemCallback = DoPostExecute;
+			postExecuteWorkItemCallback += DoPostExecute;
 
-		        PostExecuteWorkItemCallback postExecuteWorkItemCallback = DoPostExecute;
-		        postExecuteWorkItemCallback += DoPostExecute;
+			stp.QueueWorkItem(
+				new WorkItemCallback(DoWork),
+				null,
+				postExecuteWorkItemCallback);
 
-		        stp.QueueWorkItem(
-		            new WorkItemCallback(DoWork),
-		            null,
-		            postExecuteWorkItemCallback);
+			stp.WaitForIdle();
 
-		        stp.WaitForIdle();
-
-		        stp.Shutdown();
-		    });
+			stp.Shutdown();
 		}
 
 

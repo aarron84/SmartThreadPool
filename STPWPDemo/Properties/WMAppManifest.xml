@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="" />
-  <App xmlns="" ProductID="{ae084ade-0fbd-498b-b14e-c2d10925116d}" Title="STPWPDemo" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="STPWPDemo author" Description="Sample description" Publisher="STPWPDemo" PublisherID="{14be4d1a-05b9-4f24-8b61-9ce3028ac5c1}">
+  <App xmlns="" ProductID="{ae084ade-0fbd-498b-b14e-c2d10925116d}" Title="STPWPDemo" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="STPWPDemo author" Description="Sample description" Publisher="STPWPDemo" PublisherID="{e4934d64-2da0-4a28-ab84-6a230b4a3e69}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
